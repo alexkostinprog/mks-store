@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎵 Mark Sergeevich Store (MSS)
 
-## Getting Started
+![Next.js](https://shields.io)
+![TailwindCSS](https://shields.io)
+![Drizzle](https://shields.io)
 
-First, run the development server:
+Премиальный магазин цифрового аудио-контента. Стильный интерфейс, глубокая темная тема и бесшовная покупка эксклюзивных треков.
+
+## ✨ Особенности
+
+- **🎨 Дизайн**: Глубокая темная тема с эффектом Glassmorphism и неоновыми свечениями (Glow).
+- **🛒 Корзина**: Умная корзина на Zustand с сохранением в LocalStorage (товары не пропадают при перезагрузке).
+- **🔐 Авторизация**: NextAuth (Auth.js) v5 с поддержкой Credentials и входом через Google.
+- **🛡️ Безопасность**: Верификация email через **Resend** (OTP-коды) при регистрации.
+- **💳 Оплата**: Интеграция с **ЮKassa** (редирект на оплату и проверка статуса заказа).
+- **📊 Админка**: Панель управления с аналитикой выручки, списком транзакций и выгрузкой отчетов в **Excel**.
+
+## 🛠 Стек технологий
+
+- **Frontend**: Next.js 15 (App Router), Tailwind CSS, Lucide Icons, Sonner (Toasts), Framer Motion.
+- **Backend**: Next.js API Routes, Drizzle ORM.
+- **Database**: SQLite (удобно для разработки и быстрого деплоя).
+- **State Management**: Zustand + Persist Middleware.
+
+## 🚀 Быстрый старт
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com
+cd mks-store
+```
+
+### 2. Установка зависимостей
+
+```bash
+npm install
+```
+
+### 3. Настройка переменных окружения
+
+Создайте файл `.env.local` и заполните его:
+
+```env
+# Database
+DATABASE_URL="file:./sqlite.db"
+
+# Auth.js
+AUTH_SECRET="your_secret_key"
+AUTH_GOOGLE_ID="your_google_id"
+AUTH_GOOGLE_SECRET="your_google_secret"
+
+# Payments (ЮKassa)
+SHOP_ID="your_id"
+SHOP_KEY="your_key"
+
+# Email (Resend)
+RESEND_API_KEY="re_your_key"
+```
+
+### 4. Подготовка базы данных
+
+```bash
+npx drizzle-kit push
+npm run seed  # Если у вас есть скрипт для наполнения товарами
+```
+
+### 5. Запуск
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📸 Скриншоты
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+_(Здесь можно добавить ссылки на скриншоты главной страницы и админки)_
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Создано с любовью к музыке и чистому коду. 🎸 [Марк Сергеевич Store]
