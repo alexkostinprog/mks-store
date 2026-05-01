@@ -1,10 +1,8 @@
 # 🎵 Mark Sergeevich Store (MSS)
 
-<p align="left">
-  <img src="https://shields.io" alt="Next.js" />
-  <img src="https://shields.io" alt="Tailwind" />
-  <img src="https://shields.io" alt="Drizzle" />
-</p>
+![Next.js](https://shields.io)
+![Tailwind](https://shields.io)
+![Drizzle](https://shields.io)
 
 Премиальный магазин цифрового аудио-контента. Стильный интерфейс, глубокая темная тема и бесшовная покупка эксклюзивных треков.
 
