@@ -1,10 +1,6 @@
 # 🎵 Mark Sergeevich Store (MSS)
 
-<p align="left">
-  <img src="https://icons8.ru/icon/yUdJlcKanVbh/nextjs" alt="Next.js" />
-  <img src="https://icons8.ru/icon/4PiNHtUJVbLs/tailwind-css" alt="Tailwind" />
-  <img src="https://img.icons8.com/?size=96&id=15360&format=png" alt="Drizzle" />
-</p>
+[![My Skills](https://skillicons.dev/icons?i=next,tailwind,css,zustand,drizzle)](https://skillicons.dev)
 
 Премиальный магазин цифрового аудио-контента. Стильный интерфейс, глубокая темная тема и бесшовная покупка эксклюзивных треков.
 
