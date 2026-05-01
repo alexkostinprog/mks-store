@@ -2,7 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { User, LogOut, ShoppingBag, ChevronDown } from 'lucide-react';
+import {
+  User,
+  LogOut,
+  ShoppingBag,
+  ChevronDown,
+  LayoutDashboard,
+} from 'lucide-react';
 import { signOut } from 'next-auth/react';
 
 export default function UserMenu({ user }: { user: any }) {
@@ -38,10 +44,23 @@ export default function UserMenu({ user }: { user: any }) {
         <div className="absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in duration-100">
           <div className="px-4 py-3 border-b border-zinc-800">
             <p className="text-sm font-medium text-zinc-200 truncate">
-              {user?.email}
+              {user?.email} {process.env.ADMIN_EMAIL}
             </p>
           </div>
           <div className="p-1">
+            {/* ПУНКТ ДЛЯ АДМИНА — показываем только админу */}
+            {user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+              <Link
+                href="/admin"
+                className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-indigo-400 hover:bg-indigo-500/10 rounded-xl transition-colors group"
+              >
+                <LayoutDashboard
+                  size={18}
+                  className="group-hover:rotate-12 transition-transform"
+                />
+                Панель управления
+              </Link>
+            )}
             <Link
               href="/profile"
               className="flex items-center gap-3 px-3 py-2 text-sm text-zinc-300 hover:bg-indigo-600 rounded-lg"

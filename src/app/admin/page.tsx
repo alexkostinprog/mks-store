@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { orders } from '@/lib/schema';
-import { eq, sql, desc } from 'drizzle-orm';
+import { sql, desc } from 'drizzle-orm';
 import { ArrowLeft, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import ExportButton from '@/components/admin/ExportButton';
@@ -11,7 +11,8 @@ export default async function AdminPage() {
   const session = await auth();
 
   // Замени на свою почту
-  if (session?.user?.email !== 'alexkostin1@gmail.com') redirect('/');
+  if (session?.user?.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    redirect('/');
 
   // 1. Получаем статистику через Drizzle sql-хелперы
   const [stats] = await db
@@ -101,6 +102,12 @@ export default async function AdminPage() {
             <h2 className="font-black text-xl text-white tracking-tight">
               Последние транзакции
             </h2>
+            <Link
+              href="/admin/add-product"
+              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-indigo-900/20 active:scale-95 flex items-center gap-2"
+            >
+              + Добавить песню
+            </Link>
             <ExportButton data={lastOrders} />
           </div>
           {/* ... заголовок секции ... */}

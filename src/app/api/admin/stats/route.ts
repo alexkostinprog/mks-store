@@ -1,44 +1,58 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import db from '@/lib/db';
+import { db } from '@/lib/db';
+import { orders } from '@/lib/schema';
+import { sql, eq, and, desc } from 'drizzle-orm';
 
 export async function GET() {
   const session = await auth();
-  // Простая защита: проверяем email
-  if (session?.user?.email !== 'your-admin-email@test.com') {
+
+  // Используем переменную из .env
+  if (session?.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 
-  // 1. Общая выручка (только оплаченные)
-  const totalRevenue = db
-    .prepare("SELECT SUM(amount) as total FROM orders WHERE status = 'paid'")
-    .get() as any;
+  // 1. Общая выручка
+  const [totalRevenue] = await db
+    .select({
+      total: sql<number>`SUM(amount)`,
+    })
+    .from(orders)
+    .where(eq(orders.status, 'paid'));
 
-  // 2. Количество продаж по дням (последние 7 дней)
-  const salesHistory = db
-    .prepare(
-      `
-    SELECT date(createdAt) as date, COUNT(*) as count, SUM(amount) as sum
-    FROM orders 
-    WHERE status = 'paid'
-    GROUP BY date(createdAt)
-    ORDER BY date DESC LIMIT 7
-  `,
-    )
-    .all();
+  // 2. Продажи по дням (последние 7 дней)
+  const salesHistory = await db
+    .select({
+      date: sql`date(created_at)`, // проверь имя колонки в схеме (createdAt или created_at)
+      count: sql<number>`COUNT(*)`,
+      sum: sql<number>`SUM(amount)`,
+    })
+    .from(orders)
+    .where(eq(orders.status, 'paid'))
+    .groupBy(sql`date(created_at)`)
+    .orderBy(sql`date(created_at) DESC`)
+    .limit(7);
 
-  // 3. Самые продаваемые товары
-  // (Тут нужно парсить JSON из колонки items, сделаем упрощенно)
-  const allOrders = db
-    .prepare("SELECT items FROM orders WHERE status = 'paid'")
-    .all() as any[];
+  // 3. Самые продаваемые товары (парсинг JSON)
+  const allPaidOrders = await db
+    .select({ items: orders.items })
+    .from(orders)
+    .where(eq(orders.status, 'paid'));
+
   const productStats: Record<string, number> = {};
 
-  allOrders.forEach((order) => {
-    const items = JSON.parse(order.items);
-    items.forEach((item: any) => {
-      productStats[item.id] = (productStats[item.id] || 0) + item.quantity;
-    });
+  allPaidOrders.forEach((order) => {
+    try {
+      const items =
+        typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+      if (Array.isArray(items)) {
+        items.forEach((item: any) => {
+          productStats[item.id] = (productStats[item.id] || 0) + item.quantity;
+        });
+      }
+    } catch (e) {
+      console.error('Ошибка парсинга items:', e);
+    }
   });
 
   return NextResponse.json({

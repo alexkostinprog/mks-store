@@ -33,6 +33,14 @@ export default auth((req) => {
 export const config = {
   // Добавляем расширения файлов в исключения (?! ... | .png | .jpg | .svg | .webp)
   matcher: [
-    '/((?!api/auth|api/products|api/register|api/order-status|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|gif)$).*)',
+    /*
+     * Исключаем (пропускаем без проверки):
+     * 1. api/auth, api/products, api/order-status (наши апишки)
+     * 2. products (все страницы товаров)
+     * 3. login, register, success (публичные страницы)
+     * 4. _next/static, _next/image, favicon.ico (системное)
+     * 5. Все файлы с расширениями (картинки и т.д.)
+     */
+    '/((?!api/auth|api/products|api/order-status|products|login|register|success|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|gif)$).*)',
   ],
 };
