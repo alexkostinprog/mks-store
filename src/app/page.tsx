@@ -3,10 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { useCartStore } from '@/store/useCartStore';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
+import Song from '@/components/Song';
 
 export default function Home() {
   const { products, setProducts, updateCart } = useCartStore();
@@ -17,10 +17,10 @@ export default function Home() {
     });
   }, []);
 
-  const handleAddToCart = async (productId: string) => {
+  const handleAddToCart = (productId: string) => {
     try {
       // Вызываем обновление корзины из Zustand
-      await updateCart(productId, 1, products);
+      updateCart(productId, 1, products);
       // Показываем уведомление об успехе
       // Красивый кастомный тост
       toast.success('Успешно!', {
@@ -60,40 +60,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {Array.isArray(products) &&
             products.map((product) => (
-              <div
-                key={product.id}
-                className="group bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-              >
-                <Link
-                  href={`/products/${product.id}`}
-                  className="block cursor-pointer"
-                >
-                  <img
-                    src={product.img}
-                    alt={product.name}
-                    className="w-full aspect-video object-cover"
-                  />
-                  <div className="p-5">
-                    <h3 className="font-bold text-xl tracking-tight text-zinc-100 group-hover:text-indigo-400 transition-colors">
-                      {product.name}
-                    </h3>
-                    <div className="flex items-center justify-between mt-4">
-                      <span className="text-2xl font-black tracking-tighter bg-gradient-to-br from-indigo-400 to-purple-600 bg-clip-text text-transparent">
-                        {product.price} ₽
-                      </span>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleAddToCart(product.id);
-                        }}
-                        className="relative z-20 bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-500 active:scale-95 transition-all cursor-pointer pointer-events-auto"
-                      >
-                        В корзину
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              </div>
+              <Song product={product} handleAddToCart={handleAddToCart} key={product.id} />
             ))}
         </div>
       </main>

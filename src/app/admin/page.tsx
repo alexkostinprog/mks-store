@@ -65,8 +65,10 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <h1 className="text-5xl font-black tracking-tighter mb-12 text-white">
-          Панель управления <span className="text-indigo-500">MSS</span>
+        {/* Адаптивный заголовок */}
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter mb-8 sm:mb-12 text-white">
+          Панель <span className="sm:inline hidden">управления</span>
+          <span className="text-indigo-500 ml-2">MSS</span>
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -98,17 +100,20 @@ export default async function AdminPage() {
 
         {/* Таблица последних платежей */}
         <div className="bg-zinc-900/30 backdrop-blur-md rounded-[2.5rem] border border-zinc-800 shadow-2xl overflow-hidden mb-12">
-          <div className="p-8 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="font-black text-xl text-white tracking-tight">
+          <div className="p-6 sm:p-8 border-b border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Заголовок */}
+            <h2 className="font-black text-xl sm:text-2xl text-white tracking-tight">
               Последние транзакции
             </h2>
-            <Link
-              href="/admin/add-product"
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-indigo-900/20 active:scale-95 flex items-center gap-2"
-            >
-              + Добавить песню
-            </Link>
-            <ExportButton data={lastOrders} />
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/admin/add-product"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-indigo-900/20 active:scale-95 flex items-center gap-2"
+              >
+                + Добавить песню
+              </Link>
+              <ExportButton data={lastOrders} />
+            </div>
           </div>
           {/* ... заголовок секции ... */}
           <div className="overflow-x-auto">
