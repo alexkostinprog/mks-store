@@ -5,6 +5,7 @@ import { ShoppingCart } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const { cart, setIsCartOpen } = useCartStore();
@@ -37,18 +38,26 @@ export default function Navbar() {
 
           {/* Старая добрая кнопка корзины с прыгающим счетчиком */}
           {setIsCartOpen && (
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative p-2 bg-indigo-600/10 text-indigo-400 rounded-full hover:bg-indigo-600/20 transition-all border border-indigo-500/20"
+            <motion.div
+              key={cart.length} // Анимация срабатывает при изменении длины массива
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.4, 1] }} // Эффект пульсации
+              transition={{ duration: 0.4 }}
+              className="relative"
             >
-              <ShoppingCart size={20} strokeWidth={2} />
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 bg-indigo-600/10 text-indigo-400 rounded-full hover:bg-indigo-600/20 transition-all border border-indigo-500/20"
+              >
+                <ShoppingCart size={20} strokeWidth={2} />
 
-              {mounted && cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full ring-1 ring-zinc-100 animate-bounce shadow-[0_0_15px_rgba(79,70,229,0.8)]">
-                  {cart.length}
-                </span>
-              )}
-            </button>
+                {mounted && cart.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full ring-1 ring-zinc-100 animate-bounce shadow-[0_0_15px_rgba(79,70,229,0.8)]">
+                    {cart.length}
+                  </span>
+                )}
+              </button>
+            </motion.div>
           )}
         </div>
       </div>
