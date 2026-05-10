@@ -1,9 +1,8 @@
-// src/app/api/cart/route.ts
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { cartItems } from '@/lib/schema';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 export async function GET() {
   const session = await auth();

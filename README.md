@@ -1,6 +1,6 @@
 # 🎵 Mark Sergeevich Store (MSS)
 
-[![My Skills](https://skillicons.dev/icons?i=next,tailwind,css,zustand)]
+![My Skills](https://skillicons.dev/icons?i=next,react,tailwind,html,css,sqlite,zustand,figma,git,github,js,nodejs,vscode)
 
 Премиальный магазин цифрового аудио-контента. Стильный интерфейс, глубокая темная тема и бесшовная покупка эксклюзивных треков.
 

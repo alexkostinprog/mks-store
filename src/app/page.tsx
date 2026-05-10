@@ -1,6 +1,6 @@
 'use client'; // Обязательно для использования useState
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import Navbar from '@/components/Navbar';
@@ -60,7 +60,11 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {Array.isArray(products) &&
             products.map((product) => (
-              <Song product={product} handleAddToCart={handleAddToCart} key={product.id} />
+              <Song
+                product={product}
+                handleAddToCart={handleAddToCart}
+                key={product.id}
+              />
             ))}
         </div>
       </main>
